@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 
   emailErrorn =
     emailError == undefined || emailError.length == 0 ? undefined : emailError;
+
   passwordError =
     passwordError == undefined || passwordError.length == 0
       ? undefined
@@ -47,11 +48,17 @@ app.get("/", (req, res) => {
 app.post("/form", (req, res) => {
   const { email, password } = req.body;
 
+  let isEmail = email.match(/^.+@.+$/) == null ? false : true;
+
   let emailError;
   let passwordError;
 
   if (email == undefined || email == "") {
     emailError = "O email não pode ser vazia";
+  }
+
+  if (isEmail == false) {
+    emailError = "E-mail fora dos padrões";
   }
 
   if (password == undefined || password == "") {
